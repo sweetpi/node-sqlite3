@@ -53,7 +53,6 @@ function setup_arm_chroot {
 if [ -e "/.chroot_is_done" ]; then
   # We are inside ARM chroot
   echo "Running inside chrooted environment"
-
   . ./envvars.sh
 else
   echo "Setting up chrooted ARM environment"
