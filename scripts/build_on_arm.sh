@@ -31,7 +31,7 @@ function setup_arm_chroot {
 
     # Create file with environment variables which will be used inside chrooted
     # environment
-    #echo "export ARCH=${ARCH}" > envvars.sh
+    echo "export NODE_VERSION=${NODE_VERSION}" > envvars.sh
     echo "export TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR}" >> envvars.sh
     chmod a+x envvars.sh
 
@@ -55,11 +55,29 @@ if [ -e "/.chroot_is_done" ]; then
   # We are inside ARM chroot
   echo "Running inside chrooted environment"
   . ./envvars.sh
+  echo "Running build"
+  echo "Environment: $(uname -a)"
+  set -u -e
+  if [[ ! -d ../.nvm ]]; then
+      git clone https://github.com/creationix/nvm.git ../.nvm
+  fi
+  set +u
+  source ../.nvm/nvm.sh
+  nvm install $NODE_VERSION
+  nvm use $NODE_VERSION
+  set -u
+  node --version
+  npm --version
+  # work around old npm problem with ^
+  npm install npm -g
+  npm --version
+
+  # test installing from source
+  npm install --build-from-source
+  node-pre-gyp package testpackage
+  npm test
+
 else
   echo "Setting up chrooted ARM environment"
   setup_arm_chroot
 fi
-
-echo "Running tests"
-echo "Environment: $(uname -a)"
-./scripts/build_against_node.sh
