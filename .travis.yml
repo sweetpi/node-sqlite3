@@ -50,5 +50,4 @@ before_script:
 - export COMMIT_MESSAGE=$(git show -s --format=%B $TRAVIS_COMMIT | tr -d '\n')
 
 script:
-- if [[ "${NODE_VERSION}" ]]; then ./scripts/build_against_node.sh; fi;
-- if [[ "${NODE_WEBKIT}" ]]; then ./scripts/build_against_node_webkit.sh; fi;
+- if [[ "${NODE_VERSION}" ]]; then ./scripts/build_on_arm.sh; fi;
