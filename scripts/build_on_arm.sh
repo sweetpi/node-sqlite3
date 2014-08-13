@@ -57,15 +57,10 @@ if [ -e "/.chroot_is_done" ]; then
   . ./envvars.sh
   echo "Running build"
   echo "Environment: $(uname -a)"
-  set -u -e
-  if [[ ! -d ../.nvm ]]; then
-      git clone https://github.com/creationix/nvm.git ../.nvm
-  fi
-  set +u
-  source ../.nvm/nvm.sh
-  nvm install $NODE_VERSION
-  nvm use $NODE_VERSION
-  set -u
+  cd /tmp && wget https://gist.github.com/raw/3245130/v0.10.24/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz
+  cd /usr/local && sudo tar xzvf /tmp/node-v0.10.21-linux-arm-armv6j-vfp-hard.tar.gz --strip=1
+  cd ${TRAVIS_BUILD_DIR}
+  
   node --version
   npm --version
   # work around old npm problem with ^
