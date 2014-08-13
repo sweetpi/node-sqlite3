@@ -18,7 +18,7 @@ TEST_COMMAND="make test"
 function setup_arm_chroot {
     # Host dependencies
     sudo apt-get update
-    sudo apt-get install -y ${HOST_DEPENDENCIES}
+    sudo apt-get install -qq -y ${HOST_DEPENDENCIES}
 
     # Create chrooted environment
     sudo mkdir ${CHROOT_DIR}
@@ -58,7 +58,7 @@ if [ -e "/.chroot_is_done" ]; then
   echo "Running build"
   echo "Environment: $(uname -a)"
   cd /tmp && wget https://gist.github.com/raw/3245130/v0.10.24/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz
-  cd /usr/local && sudo tar xzvf /tmp/node-v0.10.21-linux-arm-armv6j-vfp-hard.tar.gz --strip=1
+  cd /usr/local && tar xzvf /tmp/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz --strip=1
   cd ${TRAVIS_BUILD_DIR}
   
   node --version
