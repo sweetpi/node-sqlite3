@@ -47,6 +47,9 @@ function setup_arm_chroot {
     # Indicate chroot environment has been set up
     sudo touch ${CHROOT_DIR}/.chroot_is_done
 
+    # mount /proc
+    sudo mount --bind /proc ${CHROOT_DIR}/proc
+
     # Call ourselves again which will cause builds to run
     sudo chroot ${CHROOT_DIR} bash -c "cd ${TRAVIS_BUILD_DIR} && ./scripts/build_on_arm.sh"
 }
