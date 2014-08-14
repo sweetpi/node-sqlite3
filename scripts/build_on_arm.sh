@@ -63,7 +63,10 @@ if [ -e "/.chroot_is_done" ]; then
   cd /tmp && wget https://gist.github.com/raw/3245130/v0.10.24/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz
   cd /usr/local && tar xzvf /tmp/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz --strip=1
   cd ${TRAVIS_BUILD_DIR}
-  sudo modprobe ipv6
+  apt-get update -y 
+  apt-get upgrade -y 
+  rpi-update
+  smodprobe ipv6
   service networking restart
   ifconfig
   
