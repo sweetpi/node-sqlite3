@@ -64,15 +64,15 @@ if [ -e "/.chroot_is_done" ]; then
   cd /usr/local && tar xzvf /tmp/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz --strip=1
   cd ${TRAVIS_BUILD_DIR}
   ifconfig
-  cat /etc/network/interface
-  cat >/etc/network/interface <<EOL
+  cat /etc/network/interfaces
+  cat >/etc/network/interfaces <<EOL
 auto lo
 iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 EOL
-  cat /etc/network/interface
-  service network restart
+  cat /etc/network/interfaces
+  service networking restart
   ifconfig
   
   node --version
