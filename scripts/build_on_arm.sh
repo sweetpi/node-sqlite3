@@ -63,19 +63,7 @@ if [ -e "/.chroot_is_done" ]; then
   cd /tmp && wget https://gist.github.com/raw/3245130/v0.10.24/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz
   cd /usr/local && tar xzvf /tmp/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz --strip=1
   cd ${TRAVIS_BUILD_DIR}
-  ifconfig
-  cat /etc/network/interfaces
-  cat >/etc/network/interfaces <<EOL
-auto lo
-iface lo inet loopback
-auto eth0
-iface eth0 inet dhcp
-EOL
-  cat /etc/resolv.conf
-  cat >/etc/resolv.conf <<EOL
-nameserver 8.8.8.8
-EOL
-  cat /etc/network/interfaces
+  sudo modprobe ipv6
   service networking restart
   ifconfig
   
