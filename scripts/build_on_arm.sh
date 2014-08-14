@@ -65,8 +65,8 @@ if [ -e "/.chroot_is_done" ]; then
   cd ${TRAVIS_BUILD_DIR}
   apt-get update -y 
   apt-get upgrade -y 
-  rpi-update
-  smodprobe ipv6
+  wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update && chmod +x /usr/bin/rpi-update && rpi-update
+  modprobe ipv6
   service networking restart
   ifconfig
   
