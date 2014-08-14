@@ -16,9 +16,6 @@ GUEST_DEPENDENCIES="build-essential git m4 sudo python"
 TEST_COMMAND="make test"
 
 function setup_arm_chroot {
-    #disable ipv6
-    echo 1 | sudo tee --append  /proc/sys/net/ipv6/conf/all/disable_ipv6
-
     # Host dependencies
     sudo apt-get update
     sudo apt-get install -qq -y ${HOST_DEPENDENCIES}
@@ -73,6 +70,10 @@ auto lo
 iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
+EOL
+  cat /etc/resolv.conf
+  cat >/etc/resolv.conf <<EOL
+nameserver 8.8.8.8
 EOL
   cat /etc/network/interfaces
   service networking restart
