@@ -10,7 +10,7 @@ CHROOT_ARCH=armhf
 HOST_DEPENDENCIES="debootstrap qemu-user-static binfmt-support sbuild"
 
 # Debian package dependencies for the chrooted environment
-GUEST_DEPENDENCIES="build-essential git m4 sudo python"
+GUEST_DEPENDENCIES="build-essential git m4 sudo python curl"
 
 # Command used to run the tests
 TEST_COMMAND="make test"
@@ -65,7 +65,8 @@ if [ -e "/.chroot_is_done" ]; then
   cd ${TRAVIS_BUILD_DIR}
   apt-get update -y 
   apt-get upgrade -y 
-  wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update && chmod +x /usr/bin/rpi-update && rpi-update
+  wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update && chmod +x /usr/bin/rpi-update
+  UPDATE_SELF=0 rpi-update
   modprobe ipv6
   service networking restart
   ifconfig
