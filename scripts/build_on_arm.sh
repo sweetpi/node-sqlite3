@@ -47,8 +47,11 @@ function setup_arm_chroot {
     # Indicate chroot environment has been set up
     sudo touch ${CHROOT_DIR}/.chroot_is_done
 
-    # mount /proc
+    # mount /proc...
     sudo mount --bind /proc ${CHROOT_DIR}/proc
+    sudo mount --bind /sys ${CHROOT_DIR}/sys
+    sudo mount --bind /dev ${CHROOT_DIR}/dev
+    sudo mount --bind /dev/pts ${CHROOT_DIR}/dev/pts
 
     # Call ourselves again which will cause builds to run
     sudo chroot ${CHROOT_DIR} bash -c "cd ${TRAVIS_BUILD_DIR} && ./scripts/build_on_arm.sh"
@@ -60,23 +63,13 @@ if [ -e "/.chroot_is_done" ]; then
   . ./envvars.sh
   echo "Running build"
   echo "Environment: $(uname -a)"
-  cd /tmp && wget https://gist.github.com/raw/3245130/v0.10.24/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz
-  cd /usr/local && tar xzvf /tmp/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz --strip=1
-  cd ${TRAVIS_BUILD_DIR}
-  apt-get update -y 
-  apt-get upgrade -y 
-  wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update && chmod +x /usr/bin/rpi-update
-  UPDATE_SELF=0 rpi-update
-  modprobe ipv6
-  service networking restart
-  ifconfig
-  
+  wget http://nodejs.org/dist/v0.10.26/node-v0.10.26.tar.gz
+  tar xfvz node-v0.10.26.tar.gz
+  cd node-v0.10.26/
+  ./configure
+  make install
   node --version
   npm --version
-  # work around old npm problem with ^
-  npm install npm -g
-  npm --version
-
   # test installing from source
   npm install --build-from-source
   node-pre-gyp package testpackage
