@@ -63,11 +63,9 @@ if [ -e "/.chroot_is_done" ]; then
   . ./envvars.sh
   echo "Running build"
   echo "Environment: $(uname -a)"
-  wget http://nodejs.org/dist/v0.10.26/node-v0.10.26.tar.gz
-  tar xfvz node-v0.10.26.tar.gz
-  cd node-v0.10.26/
-  ./configure
-  make install
+  cd /tmp && wget https://gist.github.com/raw/3245130/v0.10.24/node-v0.10.24-linux-arm-armv6j-vfp-hard.tar.gz
+  cd /usr/local && sudo tar xzvf /tmp/node-v0.10.21-linux-arm-armv6j-vfp-hard.tar.gz --strip=1
+  cd ${TRAVIS_BUILD_DIR}
   node --version
   npm --version
   # test installing from source
