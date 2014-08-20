@@ -63,8 +63,8 @@ if [ -e "/.chroot_is_done" ]; then
   . ./envvars.sh
   echo "Running build"
   echo "Environment: $(uname -a)"
-  cd /tmp && wget https://github.com/sweetpi/node-sqlite3-arm/releases/download/node/node-v0.10.30-linux-arm-pi.tar.gz
-  cd /usr/local && sudo tar xzvf /tmp/node-v0.10.30-linux-arm-pi.tar.gz --strip=1
+  cd / && wget https://github.com/sweetpi/node-sqlite3-arm/releases/download/node/node-v0.10.30-linux-arm-pi.tar.gz
+  tar xzvf /tmp/node-v0.10.30-linux-arm-pi.tar.gz --strip=1
   cd ${TRAVIS_BUILD_DIR}
   ls -al /usr/local/bin
   node --version
